@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // implementing cors
 
-const ALLOWED_ORIGINS = ["https://650d3.csb.app/"];
+const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS.split(",");
 
 app.use(cors({
   origins: function (origin, callback) {
@@ -95,8 +95,7 @@ db.once("open", function() {
 
     Todo.findByIdAndDelete(req.body.id, function(err, docs) {
       if (err) return console.log(err);
-
-      res.json({ msg: "successful deletion" });
+      res.json(docs);
     });
   });
 });
